@@ -14,7 +14,27 @@ import com.udacity.sandwichclub.utils.JsonUtils;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
+    @BindView(R.id.image_iv)
+    ImageView ingredientsIv;
+    @BindView(R.id.origin_tv)
+    TextView txtorigin;
+    @BindView(R.id.also_known_tv)
+    TextView txtalsoKnownAs;
+    @BindView(R.id.description_tv)
+    TextView txtdescription;
+    @BindView(R.id.ingredients_tv)
+    TextView txtingredients;
+
+    @BindView(R.id.also_known_as_label)
+    TextView lblalsoKnown;
+    @BindView(R.id.origin_label)
+    TextView lblOri;
+    @BindView(R.id.ingredients_label)
+    TextView lblIng;
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
@@ -23,21 +43,16 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
-        ImageView ingredientsIv = findViewById(R.id.image_iv);
-
+        ButterKnife.bind(this);
         Intent intent = getIntent();
         if (intent == null) {
             closeOnError();
         }
-
         int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
         if (position == DEFAULT_POSITION) {
-            // EXTRA_POSITION not found in intent
             closeOnError();
             return;
         }
-
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
         Sandwich sandwich = JsonUtils.parseSandwichJson(json);
@@ -46,7 +61,6 @@ public class DetailActivity extends AppCompatActivity {
             closeOnError();
             return;
         }
-
         populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
@@ -62,28 +76,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void populateUI(Sandwich sandwich) {
-
-        // Initialize and find the TextView .............
-
-        TextView txtorigin = findViewById(R.id.origin_tv);
-
-        TextView txtalsoKnownAs = findViewById(R.id.also_known_tv);
-        TextView txtdescription = findViewById(R.id.description_tv);
-        TextView txtingredients = findViewById(R.id.ingredients_tv);
-        ////////---------------------- Lables ---------------------
-        TextView lblDesc = findViewById(R.id.description_label);
-        TextView lblalsoKnown = findViewById(R.id.also_known_as_label);
-        TextView lblOri = findViewById(R.id.origin_label);
-        TextView lblIng = findViewById(R.id.ingredients_label);
-
-        //////////---------------------------------------------
-
-
-
-
-        // Get the PlaceOfOrigin
         String originText = sandwich.getPlaceOfOrigin();
-        if (originText.isEmpty()){
+        if (originText.isEmpty()) {
             txtorigin.setVisibility(View.GONE);
             lblOri.setVisibility(View.GONE);
 
@@ -91,11 +85,9 @@ public class DetailActivity extends AppCompatActivity {
             txtorigin.setText(originText);
         }
 
-
-///////////-----------------
         List<String> alsoKnownAsList = sandwich.getAlsoKnownAs();
 
-        if (alsoKnownAsList.size() == 0){
+        if (alsoKnownAsList.size() == 0) {
             lblalsoKnown.setVisibility(View.GONE);
             txtalsoKnownAs.setVisibility(View.GONE);
         } else {
@@ -116,10 +108,9 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
-
         List<String> ingredientsList = sandwich.getIngredients();
 
-        if (ingredientsList.size() == 0){
+        if (ingredientsList.size() == 0) {
             lblIng.setVisibility(View.GONE);
             txtingredients.setVisibility(View.GONE);
 
@@ -138,10 +129,6 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
-
-
-
-
         String description = sandwich.getDescription();
 
         if (description.isEmpty()) {
@@ -149,10 +136,6 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             txtdescription.setText(description);
         }
-
-
-
-
 
 
     }
