@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="color1">@color/color1</item>
-        <item name="color2">@color/color2</item>
-        <item name="color3">@color/color3</item>
+        <item name="colorPrimary">@color/color3</item>
+        <item name="colorPrimaryDark">@color/color2</item>
+        <item name="colorAccent">@color/color1</item>
     </style>
 
     <style name="LabelStyle">
@@ -19,7 +19,7 @@
         <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
     </style>
 
-    <style name="DataStyle_tv">
+    <style name="DataStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
